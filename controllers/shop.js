@@ -1,5 +1,4 @@
 const Product = require('../models/product');
-const Order = require("../models/order");
 
 exports.getProducts = (req, res) => {
   Product.findAll().then(products => {
@@ -83,7 +82,7 @@ exports.postCart = (req, res) => {
     .catch((err) => {console.log(err)});
 };
 
-exports.postCartDeleteProduct = (req, res, next) => {
+exports.postCartDeleteProduct = (req, res) => {
   const prodId = req.body.productId;
 
   req.user
@@ -100,7 +99,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
     .catch((err) => {console.log(err)});
 };
 
-exports.postOrder = (req, res, next) => {
+exports.postOrder = (req, res) => {
   let fetchedCart;
   req.user.getCart()
     .then(cart => {
@@ -127,7 +126,7 @@ exports.postOrder = (req, res, next) => {
     .catch((err) => {console.log(err)});
 };
 
-exports.getOrders = (req, res, next) => {
+exports.getOrders = (req, res) => {
   req.user.getOrders({include: ['products']})
     .then(orders => {
       res.render('shop/orders', {
